@@ -1,0 +1,162 @@
+# TeleportConfigHandler for AlathranCommands
+# Version v1.7.1
+# Author: jklmao
+
+# # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                 TeleportConfigHandler                #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # #
+
+#           Be aware of all warnings!           #
+
+# # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                 Place Holders                 #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # #
+
+# Use '<player>' for the player who sent the request.
+# Use '<accept>' for the 'Click-to-accept' message.
+# Use '<deny>' for the 'Click-to-deny' message.
+# Use '<target>' for the player who they wanted to teleport to, and for the 'Player-sent-request' message.
+# Example: /tpa <player>, where <player> is '<target>'.
+
+Player-only-command: '<red>Only players can use this command!'
+
+Insufficient-permission: '<red>You do not have sufficient permission!'
+
+Player-deny-tpa-message: '<red>Teleportation request has been denied.'
+
+Target-deny-tpa-message: '<red>Teleportation request has been denied.'
+
+Target-teleportion-canceled: '<red>Teleportation canceled...'
+
+Player-got-accepted-tpa: '<blue>Teleportation request has been accepted.'
+
+Countdown-until-tpa: '<yellow>Teleporting in 3 seconds...'
+
+Player-no-pendingtpa-message: '<red>You do not have a pending request!'
+
+Target-accepted-tpa-request: '<yellow>Request for teleportation is accepted.'
+
+Target-is-offline: '<red>This player is offline!'
+
+No-player-found: '<red>This player does not exist!'
+
+Player-teleporting-self: '<red>You can not teleport yourself!'
+
+Player-already-requested: '<red>You already requested, please wait..'
+
+Player-teleportation-request-expire: '<red>Teleportation request has expired.'
+
+Target-teleportation-request-expire: '<red>Teleportation request has expired.'
+
+Player-currently-teleporting: '<blue>Teleporting...'
+
+Target-currently-teleporting: '<yellow>Teleporting...'
+
+Player-TpToggle-Off: '<yellow>Teleportation <gold>OFF'
+
+Player-TpToggle-On: '<yellow>Teleportation <gold>ON'
+
+Target-Is-TpToggled: '<gold><target> <yellow>has teleportation off'
+
+Player-Is-TpToggled: '<red>You are tptoggled!'
+
+TpToggle-While-Teleporting: '<red>Cannot TpToggle while teleporting!'
+
+Tpacancel-message: '<gold>Tpa request has been canceled.'
+
+# TPA request expires in seconds
+Request-expire-time: 120
+
+
+# Seconds until tpa
+# Please use whole numbers
+
+Seconds-until-tpa: 3
+
+# Becareful in this part!
+# This is when a player uses not enough args
+# For example, when a player does '/tpa', it will say 'Usage: /tpa <player>'
+# So please fit the correct command under the correct message!
+# P.S '/tpohere' is also '/s' (essentials-type command).
+
+Tpa-usage: '<red>Use: /tpa <player>'
+
+Tpahere-usage: '<red>Use: /tpahere <player>'
+
+Tpaccept-usage: '<red>Use: /tpaccept <player>'
+
+Tpdeny-usage: '<red>Use: /tpadeny <player>'
+
+Tpo-usage: '<red>Use: /tpo <player>'
+
+Tpohere-usage: '<red>Use: /tpohere <player> or /s <player>'
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # #
+#                                               #
+#                  Please Read!                 #
+#                                               #
+# # # # # # # # # # # # # # # # # # # # # # # # #
+
+# This section is when a player gets a tpa request
+# Since the code used is broken into many parts, there will be many messages.
+# Whatever you do to the "Click-to-x" messages, will be the same in the 'Tpa-message'
+# Be careful!
+
+
+# Lets you choose if you want players to be able
+# to move before being teleported
+Allow-player-to-move: false
+
+Player-moved-before-tp: '<gold>The request was canceled because <player> moved!'
+
+Player-sent-request: '<yellow>You have sent a request to <gold><target>'
+
+Tpa-message: |-
+  <br>
+  <yellow><player> <gold>has requested to teleport to you.
+  <gold>Click <accept> <gold>to accept or click <deny> <gold>to deny.
+  <gold>The request expires in 120 seconds.
+  <br>
+
+Tpahere-message: |-
+  <br>
+  <yellow><player> <gold>has requested to teleport you to them.
+  <gold>Click <accept> <gold>to accept or click <deny> <gold>to deny.
+  <gold>The request expires in 120 seconds.
+  <br>
+
+# This will put additional spaces for the accept/deny messages
+Center-accept-deny-msg: true
+
+Click-to-accept: '<hover:show_text:"<green>Click to accept"><click:run_command:/tpaccept %username%><green><bold>[Accept]<reset>'
+Click-to-deny: '<hover:show_text:"<red>Click to deny"><click:run_command:/tpadeny %username%><red><bold>[Deny]<reset>'
+
+Hover-message-on-accept: '<green>Click to accept'
+Hover-message-on-deny: '<red>Click to deny'
+
+#
+# On-Screen Messages
+# It pops up in the middle of the player's screen
+#
+
+Send-on-screen-message: true
+
+# When  a player accepts a tp
+On-screen-teleporting:
+  - '<gold>Teleporting...'
+  - '<yellow>Do not move!'
+
+# When a player has successfully tp'd.
+On-screen-teleported: '<green>Teleported!'
+
+# If a player moves while they are being tp'd
+On-screen-canceled-tp: '<red>Canceled TP!'
+
+#~~~~~~~~~~~~~~~~~~#
+# More Coming Soon!#
+#~~~~~~~~~~~~~~~~~~#

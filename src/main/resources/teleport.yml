@@ -1,0 +1,70 @@
+# Teleport messages
+Messages:
+  # Tpa section
+  tptoggle-on: 'Teleportation requests enabled.'
+  tptoggle-off: 'Teleportation requests enabled.'
+  tptoggle-busy: 'Cannot toggle teleportation requests while teleporting.'
+
+  error-origin-istarget: 'You can''t teleport to yourself.'
+  error-origin-target-toggled-off: '<target> has teleportation requests off.'
+  error-origin-outstanding-request: 'You already have a outstanding request. Use /tpcancel.'
+  error-origin-no-outstanding-request: 'You have no outstanding requests.'
+  error-origin-no-outgoing-request: 'You have no outgoing requests.'
+  error-origin-target-offline: 'That player is offline.'
+
+  request-sent-origin: 'Teleportation request sent to <target>.'
+  request-sent-target-tpa: |-
+    <br>
+    <yellow><player> <gold>has requested to teleport to you.
+    <gold>Click <accept> <gold>to accept or click <deny> <gold>to deny.
+    <gold>The request expires in 120 seconds.
+    <br>
+  request-sent-target-tpahere: |-
+    <br>
+    <yellow><player> <gold>has requested to teleport you to them.
+    <gold>Click <accept> <gold>to accept or click <deny> <gold>to deny.
+    <gold>The request expires in 120 seconds.
+    <br>
+  request-accepted-origin: 'Teleportation request to <target> accepted.'
+  request-accepted-target: 'Teleportation request from <origin> accepted.'
+  request-denied-origin: 'Teleportation request to <target> denied.'
+  request-denied-target: 'Teleportation request denied.'
+  request-canceled-origin: 'Teleportation request to <target> has been canceled.'
+  request-canceled-target: 'Teleportation request from <origin> canceled.'
+  request-canceled-isbusy: 'Teleportation request canceled.'
+  request-grace-begin-origin: 'Teleporting in <time> seconds, please don''t move.'
+
+  request-click-accept: '<hover:show_text:"<green>Click to accept"><click:run_command:/tpaccept %username%><green><bold>[Accept]<reset>'
+  request-click-deny: '<hover:show_text:"<red>Click to deny"><click:run_command:/tpadeny %username%><red><bold>[Deny]<reset>'
+
+  error-origin-cancel-targetnotonline: 'Teleport canceled because the other player is no longer online.'
+  error-target-cancel-originnotonline: 'Teleport canceled because the other player is no longer online.'
+  error-origin-cancel-moved: 'Teleport canceled because you moved.'
+  error-target-cancel-moved: 'Teleport canceled because the other person moved.'
+  error-origin-cancel-title: 'Canceled TP'
+  error-origin-cancel-subtitle: ''
+
+  grace-origin-title: '<purple><bold>Teleporting'
+  grace-origin-subtitle: '<white><italic>Don''t move!'
+
+  teleporting-origin-title: '<green>Teleported'
+  teleporting-origin-subtitle: ''
+  teleporting-origin: '<green>Teleporting...'
+  teleporting-target: '<origin> Teleported to you.'
+
+Settings:
+  TPA:
+    # Enable titles informing players
+    Titles: false
+    # Request timeout in seconds
+    Timeout: 30
+    # Grace period (teleport warmup) settings
+    Grace:
+      # Warmup time before teleport in seconds
+      Time: 5
+      # Should movement cancel the teleport
+      Allow-movement: false
+    # Set to 0 to effectively disable feature, needs to be an integer
+    Price: 0
+    # Cooldown time in seconds (Set to 0 to effectively disable)
+    Cooldown: 0
