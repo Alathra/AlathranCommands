@@ -9,6 +9,7 @@ import io.github.Alathra.AlathranCommands.utils.TPCfg;
 import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -28,8 +29,13 @@ public class TeleportGraceTask implements Runnable {
     public TeleportGraceTask(final TPARequest request, final long timeGrace, final CompletableFuture<Boolean> future) {
         this.request = request;
         this.future = future;
-        this.teleporterLocation = request.getOrigin().getLocation();
         this.timeGrace = timeGrace;
+
+        this.teleporterLocation = switch (request.getType()) {
+            case TPA -> request.getOrigin().getLocation();
+            case TPAHERE -> request.getTarget().getLocation();
+            default -> null;
+        };
 
         final TeleportGraceEvent e = new TeleportGraceEvent();
         Bukkit.getServer().getPluginManager().callEvent(e);
