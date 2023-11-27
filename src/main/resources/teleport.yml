@@ -44,6 +44,9 @@ Messages:
   error-origin-cancel-title: 'Canceled TP'
   error-origin-cancel-subtitle: ''
 
+  error-origin-tpa-notenoughfunds: 'Teleporting costs $'
+  error-origin-tpahere-notenoughfunds: 'Teleporting someone to you costs $'
+
   grace-origin-title: '<purple><bold>Teleporting'
   grace-origin-subtitle: '<white><italic>Don''t move!'
 

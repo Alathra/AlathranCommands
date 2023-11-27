@@ -40,6 +40,15 @@ public class CommandTpaHere {
                         throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-outstanding-request")).build());
                     }
 
+                    // Checks if vault is loaded
+                    if (AlathranCommands.getVaultHook().isVaultLoaded()) {
+                        // If player's balance is *less* than price
+                        double price = TPCfg.get().getInt("Settings.TPA.Price");
+                        if (AlathranCommands.getVaultHook().getVault().getBalance(p) < price) {
+                            throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-tpahere-notenoughfunds").concat(String.valueOf(Math.round(price)))).build());
+                        }
+                    }
+
                     // Add incoming and outgoing request to users
                     TPARequest tpaRequest = PlayerManager.getInstance().getPlayer(target).addTPARequest(p, target, TeleportType.TPAHERE);
                     PlayerManager.getInstance().getPlayer(p).addOutgoingTPARequest(target);

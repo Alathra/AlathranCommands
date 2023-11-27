@@ -9,6 +9,7 @@ import io.github.Alathra.AlathranCommands.utils.TPCfg;
 import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -87,6 +88,8 @@ public class TeleportGraceTask implements Runnable {
             cancelTask();
 
             Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(AlathranCommands.getInstance(), new TeleportTask(request, future));
+
+            request.payPrice();
         }
     }
 

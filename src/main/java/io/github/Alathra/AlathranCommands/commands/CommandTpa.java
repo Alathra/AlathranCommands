@@ -1,16 +1,16 @@
 package io.github.Alathra.AlathranCommands.commands;
 
-import io.github.Alathra.AlathranCommands.AlathranCommands;
+import com.github.milkdrinkers.colorparser.ColorParser;
 import dev.jorel.commandapi.CommandAPIBukkit;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.enums.TeleportMode;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
-import com.github.milkdrinkers.colorparser.ColorParser;
 import io.github.Alathra.AlathranCommands.utils.TPCfg;
 import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
 import org.bukkit.entity.Player;
@@ -38,6 +38,15 @@ public class CommandTpa {
                         // Already has outgoing request
                         if (PlayerManager.getInstance().getPlayer(p).getOutgoingTPARequests().contains(target.getUniqueId())) {
                             throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-outstanding-request")).build());
+                        }
+
+                        // Checks if vault is loaded
+                        if (AlathranCommands.getVaultHook().isVaultLoaded()) {
+                            // If player's balance is *less* than price
+                            double price = TPCfg.get().getInt("Settings.TPA.Price");
+                            if (AlathranCommands.getVaultHook().getVault().getBalance(p) < price) {
+                                throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-tpa-notenoughfunds").concat(String.valueOf(Math.round(price)))).build());
+                            }
                         }
 
                         // Add incoming and outgoing request to users
