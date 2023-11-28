@@ -34,6 +34,7 @@ public class CommandHandler implements Reloadable {
         new CommandTpo(instance);
         new CommandTpoHere(instance);
         new CommandTpToggle(instance);
+        new CommandWildTp(instance);
     }
 
     @Override

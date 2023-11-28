@@ -55,6 +55,8 @@ Messages:
   teleporting-origin: '<green>Teleporting...'
   teleporting-target: '<origin> Teleported to you.'
 
+  error-wildtp-nosuitablelocation: 'No suitable location found.'
+
 Settings:
   TPA:
     # Enable titles informing players
@@ -71,3 +73,48 @@ Settings:
     Price: 0
     # Cooldown time in seconds (Set to 0 to effectively disable)
     Cooldown: 0
+
+  WildTP:
+      # Defines the playtime (in seconds) where the cooldown changes
+      Playtime: 120
+      # Cooldown before playtime
+      Cooldown-pre: 120
+      # Cooldown after playtime
+      Cooldown-post: 1200
+      # Price before playtime
+      Price-pre: 0
+      # Price after playtime
+      Price-post: 0 
+      # Number of retries to find a suitable location
+      Retries: 10
+      # Sets bounds for RTP
+      MinX: -5000
+      MinZ: -5000
+      MaxX: 5000
+      MaxZ: 5000
+
+      # Sets blocked biomes
+      Blocked-biomes:
+        - COLD_OCEAN
+        - DEEP_COLD_OCEAN
+        - DEEP_FROZEN_OCEAN
+        - DEEP_LUKEWARM_OCEAN
+        - DEEP_OCEAN
+        - DEEP_WARM_OCEAN
+        - FROZEN_OCEAN
+        - FROZEN_OCEAN
+        - LUKEWARM_OCEAN
+        - OCEAN
+        - RIVER
+        - WARM_OCEAN
+
+      #Set blocked blocks
+      Blocked-blocks:
+        - CACTUS
+        - FIRE
+        - LAVA
+        - MAGMA_BLOCK
+        - AIR
+        - VOID_AIR
+        - CAVE_AIR
+        - WATER

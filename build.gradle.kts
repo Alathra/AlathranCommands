@@ -41,6 +41,10 @@ repositories {
         content { includeGroup("me.clip") }
     }
 
+    maven ("https://papermc.io/repo/repository/maven-public/") {
+        content { includeGroup("io.papermc") }
+    }
+
     /* EssentialsX */
 //    maven("https://repo.essentialsx.net/releases/")
 //    maven("https://repo.essentialsx.net/snapshots/")
@@ -67,6 +71,8 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     compileOnly("me.clip:placeholderapi:2.11.5")
+
+    implementation("io.papermc:paperlib:1.0.7")
 }
 
 tasks {
@@ -102,6 +108,7 @@ tasks {
         reloc("com.github.milkdrinkers.Crate", "crate")
         reloc("com.github.milkdrinkers.colorparser", "colorparser")
         reloc("dev.jorel.commandapi", "commandapi")
+        reloc("io.papermc.lib", "paperlib")
 
         minimize()
     }
@@ -136,9 +143,9 @@ bukkit {
     version = "${project.version}"
     description = "${project.description}"
     authors = listOf("jklmao", "darksaid98")
-    contributors = listOf()
+    contributors = listOf("rooooose-b")
     apiVersion = "1.19"
-    website = "https://github.com/darksaid98/ClickTpa/"
+    website = "https://github.com/Alathra/AlathranCommands"
 
     // Misc properties
     load = net.minecrell.pluginyml.bukkit.BukkitPluginDescription.PluginLoadOrder.POSTWORLD // STARTUP or POSTWORLD
