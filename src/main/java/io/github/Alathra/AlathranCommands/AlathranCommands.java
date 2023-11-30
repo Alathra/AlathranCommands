@@ -2,6 +2,7 @@ package io.github.Alathra.AlathranCommands;
 
 import com.github.milkdrinkers.colorparser.ColorParser;
 import io.github.Alathra.AlathranCommands.commands.CommandHandler;
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.hooks.VaultHook;
 import io.github.Alathra.AlathranCommands.listener.ListenerHandler;
 import io.github.Alathra.AlathranCommands.utils.Logger;
@@ -58,6 +59,7 @@ public final class AlathranCommands extends JavaPlugin {
         listenerHandler.onDisable();
         vaultHook.onDisable();
         teleportConfigHandler.onDisable();
+        CooldownManager.getInstance().reset();
     }
 
     @NotNull
