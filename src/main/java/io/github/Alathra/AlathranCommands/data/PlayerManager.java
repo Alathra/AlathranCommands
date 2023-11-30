@@ -48,4 +48,8 @@ public class PlayerManager {
     public void removePlayer(Player p) {
         removePlayer(p.getUniqueId());
     }
+
+    public void reset() {
+        instance = new PlayerManager();
+    }
 }
