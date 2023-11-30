@@ -11,8 +11,8 @@ import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.enums.TeleportMode;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TeleportMessage;
 import org.bukkit.entity.Player;
 
 public class CommandTpa {

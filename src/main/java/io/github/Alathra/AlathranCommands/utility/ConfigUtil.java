@@ -1,4 +1,4 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import org.jetbrains.annotations.Nullable;
 

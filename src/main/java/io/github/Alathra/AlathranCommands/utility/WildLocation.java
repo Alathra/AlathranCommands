@@ -1,14 +1,12 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import io.papermc.lib.PaperLib;
-import com.github.milkdrinkers.colorparser.ColorParser;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;

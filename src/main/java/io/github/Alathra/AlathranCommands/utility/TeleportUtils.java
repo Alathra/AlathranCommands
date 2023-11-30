@@ -1,4 +1,4 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.events.TeleportEvent;

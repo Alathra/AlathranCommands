@@ -4,13 +4,10 @@ import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.events.TeleportGraceEvent;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.config.TeleportConfigHandler;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TeleportMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;

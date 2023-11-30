@@ -1,4 +1,4 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;

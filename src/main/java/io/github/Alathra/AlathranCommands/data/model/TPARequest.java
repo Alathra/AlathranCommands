@@ -2,7 +2,7 @@ package io.github.Alathra.AlathranCommands.data.model;
 
 import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

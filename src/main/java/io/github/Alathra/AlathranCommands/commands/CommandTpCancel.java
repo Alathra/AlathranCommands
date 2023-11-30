@@ -9,7 +9,7 @@ import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
 import org.bukkit.entity.Player;
 
 public class CommandTpCancel {

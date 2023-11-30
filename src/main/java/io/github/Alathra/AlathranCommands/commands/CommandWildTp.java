@@ -1,15 +1,12 @@
 package io.github.Alathra.AlathranCommands.commands;
 
 import com.github.milkdrinkers.colorparser.ColorParser;
-import dev.jorel.commandapi.CommandAPI;
-import dev.jorel.commandapi.CommandAPIBukkit;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.WildLocation;
-import org.bukkit.Location;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.WildLocation;
 import org.bukkit.entity.Player;
 
 public class CommandWildTp {

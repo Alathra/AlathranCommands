@@ -6,7 +6,7 @@ import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.hooks.VaultHook;
 import io.github.Alathra.AlathranCommands.listener.ListenerHandler;
-import io.github.Alathra.AlathranCommands.utils.Logger;
+import io.github.Alathra.AlathranCommands.utility.Logger;
 import io.github.Alathra.AlathranCommands.config.TeleportConfigHandler;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
