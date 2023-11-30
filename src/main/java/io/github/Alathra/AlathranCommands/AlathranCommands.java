@@ -2,8 +2,11 @@ package io.github.Alathra.AlathranCommands;
 
 import com.github.milkdrinkers.colorparser.ColorParser;
 import io.github.Alathra.AlathranCommands.commands.CommandHandler;
+import io.github.Alathra.AlathranCommands.config.ConfigHandler;
 import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
+import io.github.Alathra.AlathranCommands.db.DatabaseHandler;
+import io.github.Alathra.AlathranCommands.db.DatabaseQueries;
 import io.github.Alathra.AlathranCommands.hooks.VaultHook;
 import io.github.Alathra.AlathranCommands.listener.ListenerHandler;
 import io.github.Alathra.AlathranCommands.utility.Logger;
@@ -13,7 +16,9 @@ import org.jetbrains.annotations.NotNull;
 
 public final class AlathranCommands extends JavaPlugin {
     private static AlathranCommands instance;
+    private ConfigHandler configHandler;
     private TeleportConfigHandler teleportConfigHandler;
+    private DatabaseHandler databaseHandler;
     private CommandHandler commandHandler;
     private ListenerHandler listenerHandler;
     private static VaultHook vaultHook;
@@ -25,12 +30,16 @@ public final class AlathranCommands extends JavaPlugin {
     @Override
     public void onLoad() {
         instance = this;
+        configHandler = new ConfigHandler(instance);
         teleportConfigHandler = new TeleportConfigHandler(instance);
+        databaseHandler = new DatabaseHandler(instance);
         commandHandler = new CommandHandler(instance);
         listenerHandler = new ListenerHandler(instance);
         vaultHook = new VaultHook(instance);
 
+        configHandler.onLoad();
         teleportConfigHandler.onLoad();
+        databaseHandler.onLoad();
         commandHandler.onLoad();
         listenerHandler.onLoad();
         vaultHook.onLoad();
@@ -38,8 +47,9 @@ public final class AlathranCommands extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
+        configHandler.onEnable();
         teleportConfigHandler.onEnable();
+        databaseHandler.onEnable();
         commandHandler.onEnable();
         listenerHandler.onEnable();
         vaultHook.onEnable();
@@ -56,12 +66,25 @@ public final class AlathranCommands extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        DatabaseQueries.saveCooldowns();
+        databaseHandler.onDisable();
         commandHandler.onDisable();
         listenerHandler.onDisable();
         vaultHook.onDisable();
+        configHandler.onDisable();
         teleportConfigHandler.onDisable();
         PlayerManager.getInstance().reset();
         CooldownManager.getInstance().reset();
+    }
+
+    @NotNull
+    public DatabaseHandler getDataHandler() {
+        return databaseHandler;
+    }
+
+    @NotNull
+    public ConfigHandler getConfigHandler() {
+        return configHandler;
     }
 
     @NotNull

@@ -63,6 +63,17 @@ public class CooldownManager {
     }
 
     // Get remaining cooldown time
+    @Nullable
+    public Instant getCooldown(UUID uuid, CooldownType type) {
+        return cooldowns.get(uuid, type);
+    }
+
+    @Nullable
+    public Instant getCooldown(Player p, CooldownType type) {
+        return getCooldown(p.getUniqueId(), type);
+    }
+
+    // Get remaining cooldown time
     public Duration getRemainingCooldown(UUID uuid, CooldownType type) {
         Instant cooldown = cooldowns.get(uuid, type);
         Instant now = Instant.now();
