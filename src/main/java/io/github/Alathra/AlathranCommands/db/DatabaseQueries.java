@@ -6,7 +6,10 @@ import io.github.Alathra.AlathranCommands.utility.DB;
 import io.github.Alathra.AlathranCommands.utility.Logger;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
 import org.jooq.exception.DataAccessException;
 
 import java.nio.ByteBuffer;
@@ -14,6 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.ZoneOffset;
 import java.util.UUID;
 
 import static io.github.Alathra.AlathranCommands.db.schema.Tables.COOLDOWNS;
@@ -22,6 +26,33 @@ import static io.github.Alathra.AlathranCommands.db.schema.Tables.COOLDOWNS;
  * A holder class for all SQL queries
  */
 public abstract class DatabaseQueries {
+    /**
+     * Fetch a players cooldown from DB.
+     */
+    @Nullable
+    public static Instant getCooldown(Player p) {
+        try (
+            Connection con = DB.getConnection()
+        ) {
+            DSLContext context = DB.getContext(con);
+
+            Result<Record> result = context.select()
+                .from(COOLDOWNS)
+                .where(COOLDOWNS.UUID.equal(convertUUIDToBytes(p.getUniqueId())))
+                .fetch();
+
+            for (Record r : result) {
+                if (r.get(COOLDOWNS.TYPE).equals(CooldownType.TELEPORT_PLAYER.toString())) {
+                    return r.get(COOLDOWNS.TIME).toInstant(ZoneOffset.of(ZoneOffset.systemDefault().getId()));
+                }
+            }
+
+        } catch (SQLException | DataAccessException e) {
+            Logger.get().error("SQL Query threw an error!", e);
+        }
+        return null;
+    }
+
     /**
      * Deletes a players cooldowns and saves any new ones (if they exist) to DB.
      * <p>
@@ -34,7 +65,7 @@ public abstract class DatabaseQueries {
             DSLContext context = DB.getContext(con);
 
             savePlayerCooldown(p, context);
-        } catch (SQLException e) {
+        } catch (SQLException | DataAccessException e) {
             Logger.get().error("SQL Query threw an error!", e);
         }
     }
