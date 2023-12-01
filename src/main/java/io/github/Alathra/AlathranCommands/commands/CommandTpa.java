@@ -7,13 +7,18 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
+import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.enums.TeleportMode;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
 import io.github.Alathra.AlathranCommands.utility.TPCfg;
 import io.github.Alathra.AlathranCommands.utility.TeleportMessage;
 import org.bukkit.entity.Player;
+
+import java.time.Duration;
+import java.time.Instant;
 
 public class CommandTpa {
 
@@ -45,8 +50,12 @@ public class CommandTpa {
                             // If player's balance is *less* than price
                             double price = TPCfg.get().getInt("Settings.TPA.Price");
                             if (AlathranCommands.getVaultHook().getVault().getBalance(p) < price) {
-                                throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-tpa-notenoughfunds").concat(String.valueOf(Math.round(price)))).build());
+                                throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-notenoughfunds")).parseMinimessagePlaceholder("price", String.valueOf(Math.round(price))).build());
                             }
+                        }
+
+                        if (CooldownManager.getInstance().hasCooldown(p, CooldownType.TELEPORT_PLAYER)) {
+                            throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-cooldown")).parseMinimessagePlaceholder("cooldown", CooldownManager.getInstance().getRemainingCooldownString(p, CooldownType.TELEPORT_PLAYER)).build());
                         }
 
                         // Add incoming and outgoing request to users

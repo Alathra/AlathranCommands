@@ -10,6 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Singleton to store and access player cooldowns
@@ -27,13 +28,29 @@ public class CooldownManager {
 
     // Set cooldown
     @Nullable
+    public Instant setCooldown(UUID uuid, CooldownType type, Instant instant) {
+        return cooldowns.put(uuid, type, instant);
+    }
+
+    @Nullable
     public Instant setCooldown(UUID uuid, CooldownType type, Duration duration) {
-        return cooldowns.put(uuid, type, Instant.now().plus(duration));
+        return setCooldown(uuid, type, Instant.now().plus(duration));
+    }
+
+    @Nullable
+    public Instant setCooldown(Player p, CooldownType type, Instant instant) {
+        return setCooldown(p.getUniqueId(), type, instant);
     }
 
     @Nullable
     public Instant setCooldown(Player p, CooldownType type, Duration duration) {
-        return setCooldown(p.getUniqueId(), type, duration);
+        return setCooldown(p.getUniqueId(), type, Instant.now().plus(duration));
+    }
+
+    @Nullable
+    public Instant setCooldown(Player p, CooldownType type, int seconds) {
+        Duration duration = Duration.ofSeconds(seconds);
+        return setCooldown(p.getUniqueId(), type, Instant.now().plus(duration));
     }
 
     // Check if cooldown has expired
@@ -62,6 +79,10 @@ public class CooldownManager {
         cooldowns.row(uuid).clear();
     }
 
+    public void clearCooldowns (Player p) {
+        clearCooldowns(p.getUniqueId());
+    }
+
     // Get remaining cooldown time
     @Nullable
     public Instant getCooldown(UUID uuid, CooldownType type) {
@@ -87,6 +108,21 @@ public class CooldownManager {
 
     public Duration getRemainingCooldown(Player p, CooldownType type) {
         return getRemainingCooldown(p.getUniqueId(), type);
+    }
+
+    public String getRemainingCooldownString(Player p, CooldownType type) {
+        long cooldownTime = getRemainingCooldown(p, type).getSeconds();
+        long hours = TimeUnit.SECONDS.toHours(cooldownTime);
+        long minutes = TimeUnit.SECONDS.toMinutes(cooldownTime) - (TimeUnit.SECONDS.toHours(cooldownTime) * 60);
+        long seconds = TimeUnit.SECONDS.toSeconds(cooldownTime) - (TimeUnit.SECONDS.toMinutes(cooldownTime) * 60);
+
+        if (hours < 1) {
+            if (minutes < 1) {
+                return seconds + " seconds.";
+            }
+            return minutes + " minutes and " + seconds + " seconds.";
+        }
+        return hours + " hours, " + minutes + " minutes and " + seconds + " seconds ";
     }
 
     public void reset() {

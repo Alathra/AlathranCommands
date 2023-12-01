@@ -1,8 +1,12 @@
 package io.github.Alathra.AlathranCommands.data.model;
 
 import io.github.Alathra.AlathranCommands.AlathranCommands;
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
+import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
 import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -19,6 +23,8 @@ public class TPARequest {
     private boolean processed = false; // Has this request been processed (true when a command uses the request)
     private long time;
     private int price = 0;
+    private int tpaCooldown = 0;
+
 
     /**
      * Instantiates a new Tpa request.
@@ -38,6 +44,7 @@ public class TPARequest {
         if (Bukkit.getServer().getPluginManager().isPluginEnabled("Vault")) {
             this.price = TPCfg.get().getInt("Settings.TPA.Price");
         }
+        this.tpaCooldown = TPCfg.get().getInt("Settings.TPA.Cooldown");
     }
 
     /**
@@ -109,8 +116,13 @@ public class TPARequest {
      * Make origin pay price.
      */
     public void payPrice() {
-        if (AlathranCommands.getVaultHook().isVaultLoaded())
-            AlathranCommands.getVaultHook().getVault().withdrawPlayer(this.getOrigin(), price);
+        if (AlathranCommands.getVaultHook().isVaultLoaded()) {
+            Economy economy = AlathranCommands.getVaultHook().getVault();
+            switch (this.getType()) {
+                case TPA -> economy.withdrawPlayer(this.getOrigin(), price);
+                case TPAHERE -> economy.withdrawPlayer(this.getTarget(), price);
+            }
+        }
     }
 
     /**
@@ -120,7 +132,26 @@ public class TPARequest {
      */
     // TODO implement cooldown system
     public boolean hasCooldown() {
-        return true;
+        CooldownManager cooldownManager = CooldownManager.getInstance();
+        switch (this.getType()) {
+            case TPA -> {
+                return cooldownManager.hasCooldown(this.getOrigin(), CooldownType.TELEPORT_PLAYER);
+            }
+            case TPAHERE -> {
+                return cooldownManager.hasCooldown(this.getTarget(), CooldownType.TELEPORT_PLAYER);
+            }
+            default -> {
+                return true;
+            }
+        }
+    }
+
+    public void setCooldown() {
+        CooldownManager cooldownManager = CooldownManager.getInstance();
+        switch (this.getType()) {
+            case TPA -> cooldownManager.setCooldown(this.getOrigin(), CooldownType.TELEPORT_PLAYER, tpaCooldown);
+            case TPAHERE -> cooldownManager.setCooldown(this.getTarget(), CooldownType.TELEPORT_PLAYER, tpaCooldown);
+        }
     }
 
     /**
