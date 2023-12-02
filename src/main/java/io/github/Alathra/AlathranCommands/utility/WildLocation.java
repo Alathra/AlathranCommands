@@ -20,47 +20,45 @@ public class WildLocation {
     private static List<String> blockedBlocks = TPCfg.get().getStringList("Settings.WildTP.Blocked-blocks");
     private static Location randomLocation;
 
-    private void getRandomLocation(Player sender) {
+    private static int randomX() {
+        return ThreadLocalRandom.current().nextInt(minX, maxX + 1);
+    }
 
+    private static int randomZ() {
+        return ThreadLocalRandom.current().nextInt(minZ, maxZ + 1);
     }
 
     public static CompletableFuture<Location> search(Player player) {
-        int x = ThreadLocalRandom.current().nextInt(minX, maxX + 1);
-        int z = ThreadLocalRandom.current().nextInt(minZ, maxZ + 1);
+        int x = randomX();
+        int z = randomZ();
         Location location = new Location(player.getWorld(), x, 0, z);
 
         return PaperLib.getChunkAtAsync(location, true).thenApply( chunk -> {
-            randomLocation = checkLocation(location);
-            if (randomLocation != null)
-                return randomLocation;
+            int retries = TPCfg.get().getInt("Settings.WildTP.Retries");
+            while (retries > 0) {
+                randomLocation = checkLocation(location);
+                if (randomLocation != null)
+                    return randomLocation;
+
+                location.set(randomX(), 0, randomZ());
+                
+                retries--;
+            }
             return null;
         });
     }
 
     private static Location checkLocation(Location location) {
-        int retries = TPCfg.get().getInt("Settings.WildTP.Retries");
+        // Finds highest Y block
+        location.setY(location.getWorld().getHighestBlockYAt(location));
 
-        while (retries > 0) {
-            // Checks if biome is banned
-//            if (location.getBlock().getBiome() != null && blockedBiomes.contains(location.getBlock().getBiome().toString()))
-//                return null;
-
-            // Finds highest Y block
-            location.setY(location.getWorld().getHighestBlockYAt(location));
-
-            // Checks if block is allowed
-            Block block = location.getBlock();
-            Biome biome = location.getBlock().getBiome();
-            if (location != null && !blockedBiomes.contains(biome.toString()) && !blockedBlocks.contains(block.getType().name()))
-            {
-                return location.add(0, 1, 0);
-            }
-            Bukkit.getLogger().info("Amount of retries left: " + retries);
-            retries--;
+        // Checks if block and biome is allowed
+        Block block = location.getBlock();
+        Biome biome = location.getBlock().getBiome();
+        if (!blockedBiomes.contains(biome.toString()) && !blockedBlocks.contains(block.getType().name()))
+        {
+            return location.add(0, 1, 0);
         }
-
-        if (retries == 0)
-            location = null;
-        return location;
+        return null;
     }
 }
