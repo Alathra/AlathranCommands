@@ -2,6 +2,7 @@ package io.github.Alathra.AlathranCommands;
 
 import com.github.milkdrinkers.colorparser.ColorParser;
 import io.github.Alathra.AlathranCommands.commands.CommandHandler;
+import io.github.Alathra.AlathranCommands.config.MiscConfigHandler;
 import io.github.Alathra.AlathranCommands.hooks.VaultHook;
 import io.github.Alathra.AlathranCommands.listener.ListenerHandler;
 import io.github.Alathra.AlathranCommands.utils.Logger;
@@ -12,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public final class AlathranCommands extends JavaPlugin {
     private static AlathranCommands instance;
     private TeleportConfigHandler teleportConfigHandler;
+    private MiscConfigHandler miscConfigHandler;
     private CommandHandler commandHandler;
     private ListenerHandler listenerHandler;
     private static VaultHook vaultHook;
@@ -24,11 +26,13 @@ public final class AlathranCommands extends JavaPlugin {
     public void onLoad() {
         instance = this;
         teleportConfigHandler = new TeleportConfigHandler(instance);
+        miscConfigHandler = new MiscConfigHandler(instance);
         commandHandler = new CommandHandler(instance);
         listenerHandler = new ListenerHandler(instance);
         vaultHook = new VaultHook(instance);
 
         teleportConfigHandler.onLoad();
+        miscConfigHandler.onLoad();
         commandHandler.onLoad();
         listenerHandler.onLoad();
         vaultHook.onLoad();
@@ -38,6 +42,7 @@ public final class AlathranCommands extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         teleportConfigHandler.onEnable();
+        miscConfigHandler.onEnable();
         commandHandler.onEnable();
         listenerHandler.onEnable();
         vaultHook.onEnable();
@@ -58,11 +63,17 @@ public final class AlathranCommands extends JavaPlugin {
         listenerHandler.onDisable();
         vaultHook.onDisable();
         teleportConfigHandler.onDisable();
+        miscConfigHandler.onDisable();
     }
 
     @NotNull
     public TeleportConfigHandler getTeleportConfigHandler() {
         return teleportConfigHandler;
+    }
+
+    @NotNull
+    public MiscConfigHandler getMiscConfigHandler() {
+        return miscConfigHandler;
     }
 
     public static VaultHook getVaultHook() {
