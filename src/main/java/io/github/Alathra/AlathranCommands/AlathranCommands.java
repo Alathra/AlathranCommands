@@ -62,6 +62,8 @@ public final class AlathranCommands extends JavaPlugin {
         }
 
         Logger.get().info(ColorParser.of("<green>AlathranCommands successfully loaded.").build());
+
+        // TODO Force load data for current logged in players (support for /reload)
     }
 
     @Override
@@ -75,6 +77,12 @@ public final class AlathranCommands extends JavaPlugin {
         teleportConfigHandler.onDisable();
         PlayerManager.getInstance().reset();
         CooldownManager.getInstance().reset();
+    }
+
+    public void onReload() {
+        onDisable();
+        onLoad();
+        onEnable();
     }
 
     @NotNull

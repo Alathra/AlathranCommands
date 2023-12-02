@@ -20,8 +20,7 @@ public class CommandAlathra implements ConfigUtil {
                     new CommandAPICommand("reload")
                         .withPermission(CommandPermission.fromString("alathrancommands.reload"))
                         .executes((sender, args) -> {
-                            alathraCommands.saveDefaultConfig();
-                            alathraCommands.reloadConfig();
+                            AlathranCommands.getInstance().onReload();
                             sender.sendMessage(ColorParser.of(prefix + " <green>config has been reloaded!").build());
                         })/*, // TODO Re-enable when implementation is finished
                     new CommandAPICommand("schedule")
