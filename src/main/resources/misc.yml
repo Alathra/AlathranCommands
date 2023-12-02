@@ -1,0 +1,5 @@
+# Playtime settings
+Playtime:
+  Messages:
+    Check-self: "<green>You have been playing for <playtime>."
+    Check-other: "<green><player> has been playing for <playtime>."
