@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.UUID;
 import java.util.HashMap;
@@ -46,9 +47,9 @@ public abstract class DatabaseQueries {
 
             for (Record r : result) {
                 if (r.get(COOLDOWNS.TYPE).equals(CooldownType.TELEPORT_PLAYER.toString())) {
-                    cooldown.put(CooldownType.TELEPORT_PLAYER, r.get(COOLDOWNS.TIME).toInstant(ZoneOffset.of(ZoneOffset.systemDefault().getId())));
+                    cooldown.put(CooldownType.TELEPORT_PLAYER, r.get(COOLDOWNS.TIME).toInstant(ZoneOffset.UTC));
                 } else if (r.get(COOLDOWNS.TYPE).equals(CooldownType.TELEPORT_WILDERNESS.toString())) {
-                    cooldown.put(CooldownType.TELEPORT_WILDERNESS, r.get(COOLDOWNS.TIME).toInstant(ZoneOffset.of(ZoneOffset.systemDefault().getId())));
+                    cooldown.put(CooldownType.TELEPORT_WILDERNESS, r.get(COOLDOWNS.TIME).toInstant(ZoneOffset.UTC));
                 }
             }
 
@@ -86,7 +87,7 @@ public abstract class DatabaseQueries {
             context.insertInto(COOLDOWNS)
                 .set(COOLDOWNS.TYPE, CooldownType.TELEPORT_PLAYER.toString())
                 .set(COOLDOWNS.UUID, convertUUIDToBytes(p.getUniqueId()))
-                .set(COOLDOWNS.TIME, Timestamp.from(cooldownTeleportPlayer).toLocalDateTime())
+                .set(COOLDOWNS.TIME, LocalDateTime.ofInstant(cooldownTeleportPlayer, ZoneOffset.UTC))
                 .execute();
         }
         if (CooldownManager.getInstance().hasCooldown(p, CooldownType.TELEPORT_WILDERNESS)) {
@@ -94,7 +95,7 @@ public abstract class DatabaseQueries {
             context.insertInto(COOLDOWNS)
                 .set(COOLDOWNS.TYPE, CooldownType.TELEPORT_WILDERNESS.toString())
                 .set(COOLDOWNS.UUID, convertUUIDToBytes(p.getUniqueId()))
-                .set(COOLDOWNS.TIME, Timestamp.from(cooldownWilderness).toLocalDateTime())
+                .set(COOLDOWNS.TIME, LocalDateTime.ofInstant(cooldownWilderness, ZoneOffset.UTC))
                 .execute();
         }
     }

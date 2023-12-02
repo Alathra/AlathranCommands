@@ -163,8 +163,8 @@ On-screen-canceled-tp: '<red>Canceled TP!'
 
 # Database Settings
 db:
-  type: "hsqldb" # Available types: "hsqldb", "h2", "mysql", "mariadb"
-  prefix: "example_" # The table prefix
+  type: "h2" # Available types: "h2", "mysql", "mariadb"
+  prefix: "alathran_commands_" # The table prefix
   host: "127.0.0.1"
   port: 3306
   database: "database_name"
