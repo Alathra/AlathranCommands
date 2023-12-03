@@ -3,6 +3,7 @@ package io.github.Alathra.AlathranCommands.data;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import io.github.Alathra.AlathranCommands.enums.CooldownType;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -63,6 +64,10 @@ public class CooldownManager {
         return hasCooldown(p.getUniqueId(), type);
     }
 
+    public boolean hasCooldown(OfflinePlayer p, CooldownType type) {
+        return hasCooldown(p.getUniqueId(), type);
+    }
+
     // Remove cooldown
     @Nullable
     public Instant removeCooldown(UUID uuid, CooldownType type) {
@@ -83,6 +88,11 @@ public class CooldownManager {
         clearCooldowns(p.getUniqueId());
     }
 
+    public void clearCooldowns (OfflinePlayer p) {
+        clearCooldowns(p.getUniqueId());
+    }
+
+
     // Get remaining cooldown time
     @Nullable
     public Instant getCooldown(UUID uuid, CooldownType type) {
@@ -91,6 +101,11 @@ public class CooldownManager {
 
     @Nullable
     public Instant getCooldown(Player p, CooldownType type) {
+        return getCooldown(p.getUniqueId(), type);
+    }
+
+    @Nullable
+    public Instant getCooldown(OfflinePlayer p, CooldownType type) {
         return getCooldown(p.getUniqueId(), type);
     }
 

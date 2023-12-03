@@ -37,6 +37,8 @@ Messages:
   request-click-accept: '<hover:show_text:"<green>Click to accept"><click:run_command:/tpaccept %username%><green><bold>[Accept]<reset>'
   request-click-deny: '<hover:show_text:"<red>Click to deny"><click:run_command:/tpadeny %username%><red><bold>[Deny]<reset>'
 
+  clear-successful: '<green>Successfully cleared cooldowns for <player>.'
+
   error-origin-cancel-targetnotonline: '<red>Teleport canceled because the other player is no longer online.'
   error-target-cancel-originnotonline: '<red>Teleport canceled because the other player is no longer online.'
   error-origin-cancel-moved: '<red>Teleport canceled because you moved.'
@@ -48,6 +50,8 @@ Messages:
 
   error-notenoughfunds: '<red>Teleporting costs $<price>'
   error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
+
+  error-clear-playerhasnotplayed: '<red><player> has not played on the server before.'
 
   grace-origin-title: '<purple><bold>Teleporting'
   grace-origin-subtitle: '<white><italic>Don''t move!'

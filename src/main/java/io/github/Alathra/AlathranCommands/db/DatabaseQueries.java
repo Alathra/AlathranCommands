@@ -5,6 +5,7 @@ import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.utility.DB;
 import io.github.Alathra.AlathranCommands.utility.Logger;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
 import org.jooq.DSLContext;
@@ -65,7 +66,7 @@ public abstract class DatabaseQueries {
      * <p>
      * Execute this after modifying the cooldown cache of the player.
      */
-    public static void saveCooldown(Player p) {
+    public static void saveCooldown(OfflinePlayer p) {
         try (
             Connection con = DB.getConnection()
         ) {
@@ -77,7 +78,7 @@ public abstract class DatabaseQueries {
         }
     }
 
-    private static void savePlayerCooldown(Player p, DSLContext context) {
+    private static void savePlayerCooldown(OfflinePlayer p, DSLContext context) {
         context.deleteFrom(COOLDOWNS)
             .where(COOLDOWNS.UUID.equal(convertUUIDToBytes(p.getUniqueId())))
             .execute();
