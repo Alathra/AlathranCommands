@@ -17,10 +17,10 @@ public class CommandPlaytime {
             .withPermission("alathrancommands.playtime")
             .withOptionalArguments(new OfflinePlayerArgument("checkedPlayer"))
             .executesPlayer((Player p, CommandArguments args) -> {
-                if (args.get("checkedPlayer") == null) {
+                OfflinePlayer offlinePlayer = (OfflinePlayer) args.get("checkedPlayer");
+                if (offlinePlayer == null || offlinePlayer.getPlayer() == p) {
                     p.sendMessage(ColorParser.of(MiscCfg.get().getString("Playtime.Messages.Check-self")).parseMinimessagePlaceholder("playtime", PlaytimeChecker.playtimeString(p)).build());
                 } else {
-                    OfflinePlayer offlinePlayer = (OfflinePlayer) args.get("checkedPlayer");
                     p.sendMessage(ColorParser.of(MiscCfg.get().getString("Playtime.Messages.Check-other")).parseMinimessagePlaceholder("player", offlinePlayer.getName()).parseMinimessagePlaceholder("playtime", PlaytimeChecker.playtimeString(offlinePlayer)).build());
                 }
         })
