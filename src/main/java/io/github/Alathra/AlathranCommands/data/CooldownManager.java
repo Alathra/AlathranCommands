@@ -118,11 +118,11 @@ public class CooldownManager {
 
         if (hours < 1) {
             if (minutes < 1) {
-                return seconds + "seconds";
+                return seconds + " seconds";
             }
-            return minutes + "minutes and " + seconds + " seconds";
+            return minutes + " minutes and " + seconds + " seconds";
         }
-        return hours + "hours, " + minutes + " minutes and " + seconds + " seconds";
+        return hours + " hours, " + minutes + " minutes and " + seconds + " seconds";
     }
 
     public void reset() {
