@@ -1,16 +1,15 @@
 package io.github.Alathra.AlathranCommands.runnable;
 
 import io.github.Alathra.AlathranCommands.AlathranCommands;
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
+import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.events.TeleportGraceEvent;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.config.TeleportConfigHandler;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TeleportMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
@@ -87,9 +86,28 @@ public class TeleportGraceTask implements Runnable {
         if (timeCurrent > timeStarted + timeGrace) {
             cancelTask();
 
-            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(AlathranCommands.getInstance(), new TeleportTask(request, future));
+            Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(AlathranCommands.getInstance(), () -> {
+                if (request.hasCooldown()) {
+                    switch (request.getType()) {
+                        case TPA -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-cooldown")).parseMinimessagePlaceholder("cooldown", CooldownManager.getInstance().getRemainingCooldownString(request.getOrigin(), CooldownType.TELEPORT_PLAYER)).build());
+                        case TPAHERE -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-tpahere-cooldown")).build());
+                    }
+                    return;
+                }
 
-            request.payPrice();
+                if (request.canAfford()) {
+                    double price = TPCfg.get().getInt("Settings.TPA.Price");
+                    switch (request.getType()) {
+                        case TPA -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-notenoughfunds")).parseMinimessagePlaceholder("price", String.valueOf(Math.round(price))).build());
+                        case TPAHERE -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-tpahere-notenoughfunds")).build());
+                    }
+                    return;
+                }
+
+                request.payPrice();
+                request.setCooldown();
+                new TeleportTask(request, future);
+            });
         }
     }
 

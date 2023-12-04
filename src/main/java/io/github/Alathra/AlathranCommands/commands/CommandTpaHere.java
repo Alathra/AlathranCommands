@@ -6,14 +6,15 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
+import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.enums.TeleportMode;
 import io.github.Alathra.AlathranCommands.enums.TeleportType;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.config.TeleportConfigHandler;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.TeleportMessage;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TeleportMessage;
 import org.bukkit.entity.Player;
 
 public class CommandTpaHere {
@@ -44,9 +45,13 @@ public class CommandTpaHere {
                     if (AlathranCommands.getVaultHook().isVaultLoaded()) {
                         // If player's balance is *less* than price
                         double price = TPCfg.get().getInt("Settings.TPA.Price");
-                        if (AlathranCommands.getVaultHook().getVault().getBalance(p) < price) {
-                            throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-tpahere-notenoughfunds").concat(String.valueOf(Math.round(price)))).build());
+                        if (AlathranCommands.getVaultHook().getVault().getBalance(target) < price) {
+                            throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-tpahere-notenoughfunds")).build());
                         }
+                    }
+
+                    if (CooldownManager.getInstance().hasCooldown(target, CooldownType.TELEPORT_PLAYER)) {
+                        throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-tpahere-cooldown")).build());
                     }
 
                     // Add incoming and outgoing request to users

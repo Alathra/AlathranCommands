@@ -10,8 +10,8 @@ import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.runnable.TeleportGraceTask;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
-import io.github.Alathra.AlathranCommands.utils.TeleportUtils;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TeleportUtils;
 import org.bukkit.entity.Player;
 
 import java.time.Duration;

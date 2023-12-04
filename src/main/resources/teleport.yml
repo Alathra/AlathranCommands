@@ -25,27 +25,33 @@ Messages:
     <gold>Click <accept> <gold>to accept or click <deny> <gold>to deny.
     <gold>The request expires in 120 seconds.
     <br>
-  request-accepted-origin: 'Teleportation request to <target> accepted.'
-  request-accepted-target: 'Teleportation request from <origin> accepted.'
-  request-denied-origin: 'Teleportation request to <target> denied.'
-  request-denied-target: 'Teleportation request denied.'
-  request-canceled-origin: 'Teleportation request to <target> has been canceled.'
-  request-canceled-target: 'Teleportation request from <origin> canceled.'
-  request-canceled-isbusy: 'Teleportation request canceled.'
-  request-grace-begin-origin: 'Teleporting in <time> seconds, please don''t move.'
+  request-accepted-origin: '<green>Teleportation request to <target> accepted.'
+  request-accepted-target: '<green>Teleportation request from <origin> accepted.'
+  request-denied-origin: '<red>Teleportation request to <target> denied.'
+  request-denied-target: '<red>Teleportation request denied.'
+  request-canceled-origin: '<red>Teleportation request to <target> has been canceled.'
+  request-canceled-target: '<red>Teleportation request from <origin> canceled.'
+  request-canceled-isbusy: '<red>Teleportation request canceled.'
+  request-grace-begin-origin: '<red>Teleporting in <time> seconds, please don''t move.'
 
   request-click-accept: '<hover:show_text:"<green>Click to accept"><click:run_command:/tpaccept %username%><green><bold>[Accept]<reset>'
   request-click-deny: '<hover:show_text:"<red>Click to deny"><click:run_command:/tpadeny %username%><red><bold>[Deny]<reset>'
 
-  error-origin-cancel-targetnotonline: 'Teleport canceled because the other player is no longer online.'
-  error-target-cancel-originnotonline: 'Teleport canceled because the other player is no longer online.'
-  error-origin-cancel-moved: 'Teleport canceled because you moved.'
-  error-target-cancel-moved: 'Teleport canceled because the other person moved.'
-  error-origin-cancel-title: 'Canceled TP'
-  error-origin-cancel-subtitle: ''
+  clear-successful: '<green>Successfully cleared cooldowns for <player>.'
 
-  error-origin-tpa-notenoughfunds: 'Teleporting costs $'
-  error-origin-tpahere-notenoughfunds: 'Teleporting someone to you costs $'
+  error-origin-cancel-targetnotonline: '<red>Teleport canceled because the other player is no longer online.'
+  error-target-cancel-originnotonline: '<red>Teleport canceled because the other player is no longer online.'
+  error-origin-cancel-moved: '<red>Teleport canceled because you moved.'
+  error-target-cancel-moved: '<red>Teleport canceled because the other person moved.'
+  error-origin-cancel-title: '<red>Canceled TP'
+  error-origin-cancel-subtitle: ''
+  error-cooldown: '<red>You still have <cooldown> remaining on your cooldown.'
+  error-target-cooldown: '<red>That player cannot teleport yet!'
+
+  error-notenoughfunds: '<red>Teleporting costs $<price>'
+  error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
+
+  error-clear-playerhasnotplayed: '<red><player> has not played on the server before.'
 
   grace-origin-title: '<purple><bold>Teleporting'
   grace-origin-subtitle: '<white><italic>Don''t move!'
@@ -55,7 +61,7 @@ Messages:
   teleporting-origin: '<green>Teleporting...'
   teleporting-target: '<origin> Teleported to you.'
 
-  error-wildtp-nosuitablelocation: 'No suitable location found.'
+  error-wildtp-nosuitablelocation: '<red>No suitable location found.'
 
 Settings:
   TPA:
@@ -84,7 +90,10 @@ Settings:
       # Price before playtime
       Price-pre: 0
       # Price after playtime
-      Price-post: 0 
+      Price-post: 0
+      Grace:
+        Time: 5
+        Allow-movement: false
       # Number of retries to find a suitable location
       Retries: 10
       # Sets bounds for RTP

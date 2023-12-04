@@ -1,4 +1,4 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
 import io.github.Alathra.AlathranCommands.events.TeleportEvent;
@@ -23,17 +23,6 @@ public class TeleportUtils {
             future.complete(false);
             return;
         }
-
-        // TODO If cooldowns enabled, check cooldown
-        /*if (request.hasCooldown()) {
-
-        }*/
-
-        // TODO If balance enabled, check cooldown
-        /*if (!request.canAfford()) {
-            future.complete(false);
-            return;
-        }*/
 
         final TeleportEvent e = new TeleportEvent();
         Bukkit.getServer().getPluginManager().callEvent(e);

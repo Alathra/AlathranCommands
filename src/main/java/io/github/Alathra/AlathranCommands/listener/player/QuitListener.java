@@ -1,17 +1,19 @@
 package io.github.Alathra.AlathranCommands.listener.player;
 
+import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
+import io.github.Alathra.AlathranCommands.db.DatabaseQueries;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class QuitListener implements Listener {
-    private final PlayerManager playerManager = PlayerManager.getInstance();
-
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         Player p = e.getPlayer();
-        playerManager.removePlayer(p.getUniqueId());
+        DatabaseQueries.saveCooldown(p);
+        PlayerManager.getInstance().removePlayer(p);
+        CooldownManager.getInstance().clearCooldowns(p);
     }
 }

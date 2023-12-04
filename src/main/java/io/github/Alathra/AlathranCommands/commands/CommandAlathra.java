@@ -4,7 +4,7 @@ import io.github.Alathra.AlathranCommands.AlathranCommands;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.utils.ConfigUtil;
+import io.github.Alathra.AlathranCommands.utility.ConfigUtil;
 import org.jetbrains.annotations.Nullable;
 
 public class CommandAlathra implements ConfigUtil {
@@ -20,8 +20,7 @@ public class CommandAlathra implements ConfigUtil {
                     new CommandAPICommand("reload")
                         .withPermission(CommandPermission.fromString("alathrancommands.reload"))
                         .executes((sender, args) -> {
-                            alathraCommands.saveDefaultConfig();
-                            alathraCommands.reloadConfig();
+                            AlathranCommands.getInstance().onReload();
                             sender.sendMessage(ColorParser.of(prefix + " <green>config has been reloaded!").build());
                         })/*, // TODO Re-enable when implementation is finished
                     new CommandAPICommand("schedule")

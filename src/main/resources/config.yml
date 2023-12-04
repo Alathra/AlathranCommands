@@ -160,3 +160,14 @@ On-screen-canceled-tp: '<red>Canceled TP!'
 #~~~~~~~~~~~~~~~~~~#
 # More Coming Soon!#
 #~~~~~~~~~~~~~~~~~~#
+
+# Database Settings
+db:
+  type: "h2" # Available types: "h2", "mysql", "mariadb"
+  prefix: "alathran_commands_" # The table prefix
+  host: "127.0.0.1"
+  port: 3306
+  database: "database_name"
+  user: "name"
+  pass: "123"
+  repair: false

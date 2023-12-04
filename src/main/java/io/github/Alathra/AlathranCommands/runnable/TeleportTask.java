@@ -1,7 +1,7 @@
 package io.github.Alathra.AlathranCommands.runnable;
 
 import io.github.Alathra.AlathranCommands.data.model.TPARequest;
-import io.github.Alathra.AlathranCommands.utils.TeleportUtils;
+import io.github.Alathra.AlathranCommands.utility.TeleportUtils;
 
 import java.util.concurrent.CompletableFuture;
 

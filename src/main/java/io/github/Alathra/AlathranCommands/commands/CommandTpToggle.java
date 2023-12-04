@@ -6,7 +6,7 @@ import dev.jorel.commandapi.CommandPermission;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.enums.TeleportMode;
-import io.github.Alathra.AlathranCommands.utils.TPCfg;
+import io.github.Alathra.AlathranCommands.utility.TPCfg;
 
 public class CommandTpToggle {
     private final AlathranCommands alathraCommands;
