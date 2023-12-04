@@ -105,11 +105,18 @@ public class TPARequest {
      *
      * @return the boolean
      */
-    // TODO correct canAfford to reflect if the teleported player can afford
     public boolean canAfford() {
-        if (AlathranCommands.getVaultHook().isVaultLoaded())
-            return AlathranCommands.getVaultHook().getVault().getBalance(Bukkit.getOfflinePlayer(this.getOrigin().getUniqueId())) > price;
-
+        if (AlathranCommands.getVaultHook().isVaultLoaded()) {
+            Economy economy = AlathranCommands.getVaultHook().getVault();
+            switch (this.getType()) {
+                case TPA -> {
+                    return economy.getBalance(Bukkit.getOfflinePlayer(this.getOrigin().getUniqueId())) > price;
+                }
+                case TPAHERE -> {
+                    return economy.getBalance(Bukkit.getOfflinePlayer(this.getTarget().getUniqueId())) > price;
+                }
+            }
+        }
         return true;
     }
 
