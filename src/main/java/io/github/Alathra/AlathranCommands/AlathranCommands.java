@@ -7,12 +7,18 @@ import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.data.PlayerManager;
 import io.github.Alathra.AlathranCommands.db.DatabaseHandler;
 import io.github.Alathra.AlathranCommands.db.DatabaseQueries;
+import io.github.Alathra.AlathranCommands.enums.CooldownType;
 import io.github.Alathra.AlathranCommands.hooks.VaultHook;
 import io.github.Alathra.AlathranCommands.listener.ListenerHandler;
 import io.github.Alathra.AlathranCommands.utility.Logger;
 import io.github.Alathra.AlathranCommands.config.TeleportConfigHandler;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Instant;
+import java.util.HashMap;
 
 public final class AlathranCommands extends JavaPlugin {
     private static AlathranCommands instance;
@@ -63,7 +69,13 @@ public final class AlathranCommands extends JavaPlugin {
 
         Logger.get().info(ColorParser.of("<green>AlathranCommands successfully loaded.").build());
 
-        // TODO Force load data for current logged in players (support for /reload)
+        for (Player p : Bukkit.getServer().getOnlinePlayers()) {
+            HashMap<CooldownType, Instant> tpaCooldown = DatabaseQueries.getCooldown(p);
+            if (tpaCooldown == null) continue;
+            tpaCooldown.forEach((cooldownType, instant) -> {
+                CooldownManager.getInstance().setCooldown(p, cooldownType, instant);
+            });
+        }
     }
 
     @Override
