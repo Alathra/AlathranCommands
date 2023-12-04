@@ -100,10 +100,6 @@ public class WildTeleportTask implements Runnable {
         }
     }
 
-    void teleport(Player player) {
-
-    }
-
     void cancelTask() {
         if (this.taskId == -1) return;
 
