@@ -24,17 +24,6 @@ public class TeleportUtils {
             return;
         }
 
-        // TODO If cooldowns enabled, check cooldown
-        /*if (request.hasCooldown()) {
-
-        }*/
-
-        // TODO If balance enabled, check cooldown
-        /*if (!request.canAfford()) {
-            future.complete(false);
-            return;
-        }*/
-
         final TeleportEvent e = new TeleportEvent();
         Bukkit.getServer().getPluginManager().callEvent(e);
         if (e.isCancelled()) {

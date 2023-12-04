@@ -90,7 +90,10 @@ Settings:
       # Price before playtime
       Price-pre: 0
       # Price after playtime
-      Price-post: 0 
+      Price-post: 0
+      Grace:
+        Time: 5
+        Allow-movement: false
       # Number of retries to find a suitable location
       Retries: 10
       # Sets bounds for RTP

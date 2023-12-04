@@ -105,6 +105,7 @@ public class TPARequest {
      *
      * @return the boolean
      */
+    // TODO correct canAfford to reflect if the teleported player can afford
     public boolean canAfford() {
         if (AlathranCommands.getVaultHook().isVaultLoaded())
             return AlathranCommands.getVaultHook().getVault().getBalance(Bukkit.getOfflinePlayer(this.getOrigin().getUniqueId())) > price;
@@ -130,7 +131,6 @@ public class TPARequest {
      *
      * @return the boolean
      */
-    // TODO implement cooldown system
     public boolean hasCooldown() {
         CooldownManager cooldownManager = CooldownManager.getInstance();
         switch (this.getType()) {

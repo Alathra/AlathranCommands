@@ -8,18 +8,18 @@ import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.data.CooldownManager;
 import io.github.Alathra.AlathranCommands.enums.CooldownType;
+import io.github.Alathra.AlathranCommands.runnable.WildTeleportTask;
 import io.github.Alathra.AlathranCommands.utility.PlaytimeChecker;
 import io.github.Alathra.AlathranCommands.utility.TPCfg;
-import io.github.Alathra.AlathranCommands.utility.WildLocation;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 
-public class CommandWildTp {
+import java.time.Duration;
+import java.util.concurrent.CompletableFuture;
 
-    private int wildPreCooldown = TPCfg.get().getInt("Settings.WildTP.Cooldown-pre");
-    private int wildPostCooldown = TPCfg.get().getInt("Settings.WildTP.Cooldown-post");
-    private int pricePreCooldown = TPCfg.get().getInt("Settings.WildTP.Price-pre");
-    private int pricePostCooldown = TPCfg.get().getInt("Settings.WildTP.Price-post");
+public class CommandWildTp {
+    private final int pricePreCooldown = TPCfg.get().getInt("Settings.WildTP.Price-pre");
+    private final int pricePostCooldown = TPCfg.get().getInt("Settings.WildTP.Price-post");
+
 
     public CommandWildTp (AlathranCommands pl) {
         new CommandAPICommand("wildtp")
@@ -44,23 +44,9 @@ public class CommandWildTp {
                     throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-cooldown")).parseMinimessagePlaceholder("cooldown", CooldownManager.getInstance().getRemainingCooldownString(p, CooldownType.TELEPORT_WILDERNESS)).build());
                 }
 
-                // Teleports player
-                WildLocation.search(p).thenAccept(location -> {
-                    if (location != null) {
-                        p.teleport(location);
-                        if (checkPlaytime) {
-                            if (AlathranCommands.getVaultHook().isVaultLoaded())
-                                AlathranCommands.getVaultHook().getVault().withdrawPlayer(p, pricePostCooldown);
-                            CooldownManager.getInstance().setCooldown(p, CooldownType.TELEPORT_WILDERNESS, wildPostCooldown);
-                        } else {
-                            if (AlathranCommands.getVaultHook().isVaultLoaded())
-                                AlathranCommands.getVaultHook().getVault().withdrawPlayer(p, pricePreCooldown);
-                            CooldownManager.getInstance().setCooldown(p, CooldownType.TELEPORT_WILDERNESS, wildPreCooldown);
-                        }
-                    } else {
-                        p.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-wildtp-nosuitablelocation")).build());
-                    }
-                });
+                final long grace = Duration.ofSeconds(TPCfg.get().getInt("Settings.WildTP.Grace.Time")).toMillis();
+
+                new WildTeleportTask(p, grace);
         })
             .register();
     }
