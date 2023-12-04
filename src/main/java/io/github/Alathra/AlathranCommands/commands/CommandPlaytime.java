@@ -5,8 +5,8 @@ import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.arguments.OfflinePlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
-import io.github.Alathra.AlathranCommands.utils.MiscCfg;
-import io.github.Alathra.AlathranCommands.utils.PlaytimeChecker;
+import io.github.Alathra.AlathranCommands.utility.MiscCfg;
+import io.github.Alathra.AlathranCommands.utility.PlaytimeChecker;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 

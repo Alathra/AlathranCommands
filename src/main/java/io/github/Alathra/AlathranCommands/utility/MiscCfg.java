@@ -1,4 +1,4 @@
-package io.github.Alathra.AlathranCommands.utils;
+package io.github.Alathra.AlathranCommands.utility;
 
 import com.github.milkdrinkers.Crate.Config;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
