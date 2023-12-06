@@ -1,5 +1,7 @@
 package io.github.Alathra.AlathranCommands.utility;
 
+import com.palmergames.bukkit.towny.TownyAPI;
+import com.palmergames.bukkit.towny.object.Coord;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -57,6 +59,12 @@ public class WildLocation {
         Biome biome = location.getBlock().getBiome();
         if (!blockedBiomes.contains(biome.toString()) && !blockedBlocks.contains(block.getType().name()))
         {
+            if (Bukkit.getPluginManager().isPluginEnabled("Towny")) {
+                if (TownyAPI.getInstance().getTownyWorld(location.getWorld()).getMinDistanceFromOtherTownsPlots(Coord.parseCoord(location)) < 100) {
+                    return location.add(0, 1, 0);
+                }
+                return null;
+            }
             return location.add(0, 1, 0);
         }
         return null;
