@@ -83,9 +83,9 @@ dependencies {
 
     compileOnly("me.clip:placeholderapi:2.11.5")
 
-    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.0")
-
-    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.7")
+    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.7") {
+        exclude("com.palmergames.adventure")
+    }
 
     implementation("io.papermc:paperlib:1.0.7")
 
