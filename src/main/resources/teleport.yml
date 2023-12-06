@@ -48,6 +48,8 @@ Messages:
   error-cooldown: '<red>You still have <cooldown> remaining on your cooldown.'
   error-target-cooldown: '<red>That player cannot teleport yet!'
 
+  error-wild-wrongworld: '<red>You can''t use that command here!'
+
   error-notenoughfunds: '<red>Teleporting costs $<price>'
   error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
 
@@ -101,6 +103,14 @@ Settings:
       MinZ: -5000
       MaxX: 5000
       MaxZ: 5000
+
+      # Always RTPs player to the world they are currently in
+      Teleport-current-world: false
+      # Worlds players are allowed to teleport from. Only active if Teleport-current-world is false.
+      Allowed-origin-worlds:
+        - world
+      # World the player teleports to. Only active if Teleport-current-world is false.
+      Destination-world: 'world'
 
       # Sets blocked biomes
       Blocked-biomes:

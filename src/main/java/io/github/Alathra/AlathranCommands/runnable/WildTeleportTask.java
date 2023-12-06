@@ -11,6 +11,7 @@ import io.github.Alathra.AlathranCommands.utility.WildLocation;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import java.util.concurrent.CompletableFuture;
@@ -26,8 +27,9 @@ public class WildTeleportTask implements Runnable {
     private int price = 0;
     private int wildCooldown = 0;
     private Economy economy;
+    private World world;
 
-    public WildTeleportTask(Player player, long timeGrace) {
+    public WildTeleportTask(Player player, long timeGrace, World world) {
         this.player = player;
         this.timeGrace = timeGrace;
 
@@ -49,6 +51,8 @@ public class WildTeleportTask implements Runnable {
         }
 
         this.teleporterLocation = player.getLocation();
+
+        this.world = world;
 
         final TeleportGraceEvent e = new TeleportGraceEvent();
         Bukkit.getServer().getPluginManager().callEvent(e);
@@ -87,7 +91,7 @@ public class WildTeleportTask implements Runnable {
                     return;
                 }
 
-                WildLocation.search(player).thenAccept(location -> {
+                WildLocation.search(player, world).thenAccept(location -> {
                     if (location != null) {
                         economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), price);
                         cooldownManager.setCooldown(player, CooldownType.TELEPORT_WILDERNESS, wildCooldown);
