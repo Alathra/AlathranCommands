@@ -36,6 +36,7 @@ repositories {
         content {
             includeGroup("com.github.MilkBowl")
             includeGroup("com.github.milkdrinkers")
+            includeGroup("com.github.TownyAdvanced")
         }
     }
 
@@ -49,6 +50,10 @@ repositories {
 
     maven ("https://papermc.io/repo/repository/maven-public/") {
         content { includeGroup("io.papermc") }
+    }
+
+    maven ("https://repo.glaremasters.me/repository/towny/") {
+        content { includeGroup("com.palmergames.bukkit.towny") }
     }
 
     /* EssentialsX */
@@ -77,6 +82,10 @@ dependencies {
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
     compileOnly("me.clip:placeholderapi:2.11.5")
+
+    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.0")
+
+    compileOnly("com.palmergames.bukkit.towny:towny:0.100.0.7")
 
     implementation("io.papermc:paperlib:1.0.7")
 
