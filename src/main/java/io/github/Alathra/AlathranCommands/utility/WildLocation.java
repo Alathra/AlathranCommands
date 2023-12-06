@@ -5,6 +5,7 @@ import com.palmergames.bukkit.towny.object.Coord;
 import io.papermc.lib.PaperLib;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ public class WildLocation {
         return ThreadLocalRandom.current().nextInt(minZ, maxZ + 1);
     }
 
-    public static CompletableFuture<Location> search(Player player) {
+    public static CompletableFuture<Location> search(Player player, World world) {
         int x = randomX();
         int z = randomZ();
         Location location = new Location(player.getWorld(), x, 0, z);
