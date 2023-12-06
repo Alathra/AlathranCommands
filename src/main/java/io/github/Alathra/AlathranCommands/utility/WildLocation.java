@@ -9,6 +9,7 @@ import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadLocalRandom;
@@ -20,7 +21,6 @@ public class WildLocation {
     private static int minZ = TPCfg.get().getInt("Settings.WildTP.MinZ");
     private static List<String> blockedBiomes = TPCfg.get().getStringList("Settings.WildTP.Blocked-biomes");
     private static List<String> blockedBlocks = TPCfg.get().getStringList("Settings.WildTP.Blocked-blocks");
-    private static Location randomLocation;
     private static int townDistance = TPCfg.get().getInt("Settings.WildTP.Town-distance");
 
     private static int randomX() {
@@ -39,7 +39,7 @@ public class WildLocation {
         return PaperLib.getChunkAtAsync(location, true).thenApply( chunk -> {
             int retries = TPCfg.get().getInt("Settings.WildTP.Retries");
             while (retries > 0) {
-                randomLocation = checkLocation(location);
+                @Nullable Location randomLocation = checkLocation(location);
                 if (randomLocation != null)
                     return randomLocation;
 
@@ -51,7 +51,7 @@ public class WildLocation {
         });
     }
 
-    private static Location checkLocation(Location location) {
+    @Nullable private static Location checkLocation(Location location) {
         // Finds highest Y block
         location.setY(location.getWorld().getHighestBlockYAt(location));
 
