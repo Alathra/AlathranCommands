@@ -7,13 +7,11 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.PlayerArgument;
 import dev.jorel.commandapi.executors.CommandArguments;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
-import io.github.Alathra.AlathranCommands.utility.ConfigUtil;
 import io.github.Alathra.AlathranCommands.utility.TPCfg;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.jetbrains.annotations.Nullable;
 
-public class CommandTpo implements ConfigUtil {
+public class CommandTpo {
     private final AlathranCommands alathraCommands;
 
     public CommandTpo(AlathranCommands pl) {
@@ -30,15 +28,9 @@ public class CommandTpo implements ConfigUtil {
                         throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-istarget")).build());
                     }
 
-                    p.sendMessage(ColorParser.of(getMsg("Player-currently-teleporting")).build());
-                    target.sendMessage(ColorParser.of(getMsg("Target-currently-teleporting")).build());
+                    p.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.teleporting-origin")).build());
                     p.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
                 })
                 .register();
-    }
-
-    @Override
-    public @Nullable String getMsg(String path) {
-        return alathraCommands.getConfig().getString(path);
     }
 }
