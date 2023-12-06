@@ -21,6 +21,7 @@ public class WildLocation {
     private static List<String> blockedBiomes = TPCfg.get().getStringList("Settings.WildTP.Blocked-biomes");
     private static List<String> blockedBlocks = TPCfg.get().getStringList("Settings.WildTP.Blocked-blocks");
     private static Location randomLocation;
+    private static int townDistance = TPCfg.get().getInt("Settings.WildTP.Town-distance");
 
     private static int randomX() {
         return ThreadLocalRandom.current().nextInt(minX, maxX + 1);
@@ -60,7 +61,7 @@ public class WildLocation {
         if (!blockedBiomes.contains(biome.toString()) && !blockedBlocks.contains(block.getType().name()))
         {
             if (Bukkit.getPluginManager().isPluginEnabled("Towny")) {
-                if (TownyAPI.getInstance().getTownyWorld(location.getWorld()).getMinDistanceFromOtherTownsPlots(Coord.parseCoord(location)) < 100) {
+                if (TownyAPI.getInstance().getTownyWorld(location.getWorld()).getMinDistanceFromOtherTownsPlots(Coord.parseCoord(location)) < townDistance) {
                     return location.add(0, 1, 0);
                 }
                 return null;

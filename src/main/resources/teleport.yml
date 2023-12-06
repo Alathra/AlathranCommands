@@ -94,6 +94,8 @@ Settings:
       Grace:
         Time: 5
         Allow-movement: false
+      # Minimum distance to nearest Towny town
+      Town-distance: 100
       # Number of retries to find a suitable location
       Retries: 10
       # Sets bounds for RTP
