@@ -14,6 +14,7 @@ import io.github.Alathra.AlathranCommands.utility.TPCfg;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.time.Duration;
 import java.util.List;
@@ -24,7 +25,6 @@ public class CommandWildTp {
     private final int pricePostCooldown = TPCfg.get().getInt("Settings.WildTP.Price-post");
     private final boolean teleportCurrentWorld = TPCfg.get().getBoolean("Settings.WildTP.Teleport-current-world");
     private final List<String> allowedWorlds = TPCfg.get().getStringList("Settings.WildTP.Allowed-origin-worlds");
-    private World teleportWorld;
 
 
     public CommandWildTp (AlathranCommands pl) {
@@ -34,6 +34,8 @@ public class CommandWildTp {
             .executesPlayer((Player p, CommandArguments args) -> {
 
                 boolean checkPlaytime = PlaytimeChecker.checkPlaytime(p);
+
+                @Nullable World teleportWorld;
 
                 // Checks if player is allowed to RTP from this world
                 if (!teleportCurrentWorld && !allowedWorlds.contains(p.getWorld().getName())) {
@@ -59,6 +61,9 @@ public class CommandWildTp {
                     teleportWorld = p.getWorld();
                 } else {
                     teleportWorld = Bukkit.getWorld(TPCfg.get().getString("Settings.WildTP.Destination-world"));
+                    if (teleportWorld == null) {
+                        throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-world-config")).build());
+                    }
                 }
 
                 final long grace = Duration.ofSeconds(TPCfg.get().getInt("Settings.WildTP.Grace.Time")).toMillis();

@@ -49,6 +49,7 @@ Messages:
   error-target-cooldown: '<red>That player cannot teleport yet!'
 
   error-wild-wrongworld: '<red>You can''t use that command here!'
+  error-world-config: '<red>The world settings have not been configured correctly.'
 
   error-notenoughfunds: '<red>Teleporting costs $<price>'
   error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
