@@ -7,6 +7,7 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
+import io.github.Alathra.AlathranCommands.utility.MiscCfg;
 import org.bukkit.Bukkit;
 
 import java.time.Duration;
@@ -122,26 +123,28 @@ public class CommandStop {
             final boolean shouldStop = currentTime.isAfter(actionEndTime) && !Bukkit.isStopping();
 
             if (shouldStop) {
-                Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server...").build());
+                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
                 Bukkit.shutdown();
                 return;
             }
 
             // Announce minutes remaining
+            // TODO check countdown (and probably correct it too)
             if (remainingTime.toSecondsPart() == 0) {
                 switch (Math.toIntExact(remainingTime.toMinutes())) {
                     case 30, 10, 5, 4, 3, 2, 1 -> {
-                        Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server in <time> minutes.").build());
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minutes")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
                         return;
                     }
                 }
             }
 
             // Announce seconds remaining
+            // TODO Correct countdown
             if (remainingTime.toMinutes() == 0) {
                 switch (Math.toIntExact(remainingTime.toSeconds())) {
                     case 30, 20, 10, 5, 4, 3, 2, 1 -> {
-                        Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server in <time> seconds.").build());
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
                         return;
                     }
                 }

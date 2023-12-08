@@ -3,3 +3,14 @@ Playtime:
   Messages:
     Check-self: "<green>You have been playing for <playtime>."
     Check-other: "<green><player> has been playing for <playtime>."
+
+# Scheduler settings
+Scheduler:
+  Scheduler-tag: '<green>[<red>Scheduler<green>]'
+  Messages:
+    Restart-seconds: '<scheduler> <green>Server is restarting in <seconds> seconds.'
+    Restart-minutes: '<scheduler> <green>Server is restarting in <minutes> minutes.'
+    Restart-now: '<scheduler> <green>Restarting the server...'
+    Stop-seconds: '<scheduler> <green>Server is stopping in <seconds> seconds.'
+    Stop-minutes: '<scheduler> <green>Server is stopping in <minutes> minutes.'
+    Stop-now: '<scheduler> <green>Stopping the server...'
