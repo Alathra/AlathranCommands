@@ -8,9 +8,11 @@ Playtime:
 Scheduler:
   Scheduler-tag: '<green>[<red>Scheduler<green>]'
   Messages:
+    Restart-scheduled: '<scheduler> <green>Restart scheduled in <minutes> minutes.'
     Restart-seconds: '<scheduler> <green>Server is restarting in <seconds> seconds.'
     Restart-minutes: '<scheduler> <green>Server is restarting in <minutes> minutes.'
     Restart-now: '<scheduler> <green>Restarting the server...'
+    Stop-scheduled: '<scheduler> <green>Stop scheduled in <minutes> minutes.'
     Stop-seconds: '<scheduler> <green>Server is stopping in <seconds> seconds.'
     Stop-minutes: '<scheduler> <green>Server is stopping in <minutes> minutes.'
     Stop-now: '<scheduler> <green>Stopping the server...'

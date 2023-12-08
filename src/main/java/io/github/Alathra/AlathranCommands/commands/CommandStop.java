@@ -51,6 +51,7 @@ public class CommandStop {
                 acitonDuration = Duration.ofMinutes(minutes);
                 actionBeginTime = Instant.now();
                 actionEndTime = Instant.now().plus(acitonDuration);
+                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-scheduled")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(minutes)).build());
                 scheduleStart();
             });
     }
@@ -84,6 +85,7 @@ public class CommandStop {
                 acitonDuration = Duration.ofMinutes(minutes);
                 actionBeginTime = Instant.now();
                 actionEndTime = Instant.now().plus(acitonDuration);
+                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-scheduled")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(minutes)).build());
                 scheduleStart();
             });
     }
@@ -132,7 +134,7 @@ public class CommandStop {
                         return;
                     }
                     case RESTART -> {
-                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
                         Bukkit.spigot().restart();
                         return;
                     }
