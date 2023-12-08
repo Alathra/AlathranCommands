@@ -50,6 +50,7 @@ Messages:
 
   error-wild-wrongworld: '<red>You can''t use that command here!'
   error-world-config: '<red>The world settings have not been configured correctly.'
+  wild-findinglocation: '<purple>Finding a suitable location. Please stand still...'
 
   error-notenoughfunds: '<red>Teleporting costs $<price>'
   error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'

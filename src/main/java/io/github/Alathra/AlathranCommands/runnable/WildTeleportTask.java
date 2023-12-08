@@ -95,6 +95,7 @@ public class WildTeleportTask implements Runnable {
                     if (location != null) {
                         economy.withdrawPlayer(Bukkit.getOfflinePlayer(player.getUniqueId()), price);
                         cooldownManager.setCooldown(player, CooldownType.TELEPORT_WILDERNESS, wildCooldown);
+                        player.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.teleporting-origin")).build());
                         player.teleport(location);
                     } else {
                         player.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-wildtp-nosuitablelocation")).build());

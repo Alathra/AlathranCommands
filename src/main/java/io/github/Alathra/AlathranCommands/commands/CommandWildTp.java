@@ -68,6 +68,7 @@ public class CommandWildTp {
 
                 final long grace = Duration.ofSeconds(TPCfg.get().getInt("Settings.WildTP.Grace.Time")).toMillis();
 
+                p.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.wild-findinglocation")).build());
                 new WildTeleportTask(p, grace, teleportWorld);
         })
             .register();
