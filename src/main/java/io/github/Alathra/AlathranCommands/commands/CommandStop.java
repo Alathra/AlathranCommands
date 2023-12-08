@@ -8,7 +8,9 @@ import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
 import io.github.Alathra.AlathranCommands.utility.MiscCfg;
+import io.papermc.lib.environments.SpigotEnvironment;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -123,9 +125,19 @@ public class CommandStop {
             final boolean shouldStop = currentTime.isAfter(actionEndTime) && !Bukkit.isStopping();
 
             if (shouldStop) {
-                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
-                Bukkit.shutdown();
-                return;
+                switch (actionType) {
+                    case STOP -> {
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
+                        Bukkit.shutdown();
+                        return;
+                    }
+                    case RESTART -> {
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
+                        Bukkit.spigot().restart();
+                        return;
+                    }
+                }
+
             }
 
             switch (actionType) {
