@@ -15,7 +15,7 @@ public class CommandAlathra implements ConfigUtil {
         alathraCommands = pl;
         alathraCommands.saveDefaultConfig();
 
-        new CommandAPICommand("alathracommands")
+        new CommandAPICommand("alathrancommands")
                 .withSubcommands(
                     new CommandAPICommand("reload")
                         .withPermission(CommandPermission.fromString("alathrancommands.reload"))
