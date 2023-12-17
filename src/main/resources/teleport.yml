@@ -64,6 +64,7 @@ Messages:
   teleporting-origin-subtitle: ''
   teleporting-origin: '<green>Teleporting...'
   teleporting-target: '<origin> Teleported to you.'
+  teleporting-tpo-target: '<yellow>Teleporting...'
 
   error-wildtp-nosuitablelocation: '<red>No suitable location found.'
 

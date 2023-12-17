@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.Nullable;
 
-public class CommandTpoHere implements ConfigUtil {
+public class CommandTpoHere {
     private final AlathranCommands alathraCommands;
 
     public CommandTpoHere(AlathranCommands pl) {
@@ -30,15 +30,10 @@ public class CommandTpoHere implements ConfigUtil {
                         throw CommandAPIBukkit.failWithAdventureComponent(ColorParser.of(TPCfg.get().getString("Messages.error-origin-istarget")).build());
                     }
 
-                    p.sendMessage(ColorParser.of(getMsg("Player-currently-teleporting")).build());
+                    p.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.teleporting-origin")).build());
                     target.teleportAsync(p.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
-                    target.sendMessage(ColorParser.of(getMsg("Target-currently-teleporting")).build());
+                    target.sendMessage(ColorParser.of(TPCfg.get().getString("Messages.teleporting-tpo-target")).build());
                 })
                 .register();
-    }
-
-    @Override
-    public @Nullable String getMsg(String path) {
-        return alathraCommands.getConfig().getString(path);
     }
 }

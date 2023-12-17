@@ -4,10 +4,8 @@ import io.github.Alathra.AlathranCommands.AlathranCommands;
 import dev.jorel.commandapi.CommandAPICommand;
 import dev.jorel.commandapi.CommandPermission;
 import com.github.milkdrinkers.colorparser.ColorParser;
-import io.github.Alathra.AlathranCommands.utility.ConfigUtil;
-import org.jetbrains.annotations.Nullable;
 
-public class CommandAlathra implements ConfigUtil {
+public class CommandAlathra {
     final private String prefix = "[ACMDS]";
     private final AlathranCommands alathraCommands;
 
@@ -33,9 +31,5 @@ public class CommandAlathra implements ConfigUtil {
 
                 )
                 .register();
-    }
-
-    public @Nullable String getMsg(String path) {
-        return alathraCommands.getConfig().getString(path);
     }
 }
