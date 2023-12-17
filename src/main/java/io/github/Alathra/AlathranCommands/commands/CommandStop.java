@@ -7,7 +7,10 @@ import dev.jorel.commandapi.CommandPermission;
 import dev.jorel.commandapi.arguments.ArgumentSuggestions;
 import dev.jorel.commandapi.arguments.IntegerArgument;
 import io.github.Alathra.AlathranCommands.AlathranCommands;
+import io.github.Alathra.AlathranCommands.utility.MiscCfg;
+import io.papermc.lib.environments.SpigotEnvironment;
 import org.bukkit.Bukkit;
+import org.bukkit.Server;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -48,6 +51,7 @@ public class CommandStop {
                 acitonDuration = Duration.ofMinutes(minutes);
                 actionBeginTime = Instant.now();
                 actionEndTime = Instant.now().plus(acitonDuration);
+                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-scheduled")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(minutes)).build());
                 scheduleStart();
             });
     }
@@ -81,6 +85,7 @@ public class CommandStop {
                 acitonDuration = Duration.ofMinutes(minutes);
                 actionBeginTime = Instant.now();
                 actionEndTime = Instant.now().plus(acitonDuration);
+                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-scheduled")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(minutes)).build());
                 scheduleStart();
             });
     }
@@ -118,21 +123,52 @@ public class CommandStop {
         isActionScheduled = true;
         actionTaskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(AlathranCommands.getInstance(), () -> {
             final Instant currentTime = Instant.now();
-            final Duration remainingTime = Duration.between(currentTime, actionBeginTime);
+            final Duration remainingTime = Duration.between(currentTime, actionEndTime).abs();
             final boolean shouldStop = currentTime.isAfter(actionEndTime) && !Bukkit.isStopping();
 
             if (shouldStop) {
-                Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server...").build());
-                Bukkit.shutdown();
-                return;
+                switch (actionType) {
+                    case STOP -> {
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
+                        Bukkit.shutdown();
+                        return;
+                    }
+                    case RESTART -> {
+                        Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-now")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).build());
+                        Bukkit.spigot().restart();
+                        return;
+                    }
+                }
+
             }
 
             // Announce minutes remaining
             if (remainingTime.toSecondsPart() == 0) {
                 switch (Math.toIntExact(remainingTime.toMinutes())) {
-                    case 30, 10, 5, 4, 3, 2, 1 -> {
-                        Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server in <time> minutes.").build());
-                        return;
+                    case 30, 10, 5, 4, 3, 2 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minutes")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-minutes")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
+                                return;
+                            }
+                        }
+
+                    }
+                    case 1 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
+                                return;
+                            }
+                        }
                     }
                 }
             }
@@ -140,13 +176,33 @@ public class CommandStop {
             // Announce seconds remaining
             if (remainingTime.toMinutes() == 0) {
                 switch (Math.toIntExact(remainingTime.toSeconds())) {
-                    case 30, 20, 10, 5, 4, 3, 2, 1 -> {
-                        Bukkit.broadcast(ColorParser.of("&a[&cScheduler&a] Stopping the server in <time> seconds.").build());
-                        return;
+                    case 30, 10, 5, 4, 3, 2 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                        }
+
+                    }
+                    case 1 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                        }
                     }
                 }
             }
-
         }, 0L, 20L);
     }
 }
