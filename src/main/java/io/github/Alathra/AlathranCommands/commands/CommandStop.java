@@ -142,60 +142,30 @@ public class CommandStop {
 
             }
 
-            switch (actionType) {
-                case STOP -> {
-                    // Announce minutes remaining
-                    if (remainingTime.toSecondsPart() == 0) {
-                        switch (Math.toIntExact(remainingTime.toMinutes())) {
-                            case 30, 10, 5, 4, 3, 2 -> {
+            // Announce minutes remaining
+            if (remainingTime.toSecondsPart() == 0) {
+                switch (Math.toIntExact(remainingTime.toMinutes())) {
+                    case 30, 10, 5, 4, 3, 2 -> {
+                        switch (actionType) {
+                            case STOP -> {
                                 Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minutes")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
                                 return;
                             }
-                            case 1 -> {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler.tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
-                                return;
-                            }
-                        }
-                    }
-
-                    // Announce seconds remaining
-                    if (remainingTime.toMinutes() == 0) {
-                        switch (Math.toIntExact(remainingTime.toSeconds())) {
-                            case 30, 20, 10, 5, 4, 3, 2 -> {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
-                                return;
-                            }
-                            case 1 -> {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler.tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
-                                return;
-                            }
-                        }
-                    }
-                }
-                case RESTART -> {
-                    // Announce minutes remaining
-                    if (remainingTime.toSecondsPart() == 0) {
-                        switch (Math.toIntExact(remainingTime.toMinutes())) {
-                            case 30, 10, 5, 4, 3, 2 -> {
+                            case RESTART -> {
                                 Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-minutes")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
                                 return;
                             }
-                            case 1 -> {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler.tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
-                                return;
-                            }
                         }
-                    }
 
-                    // Announce seconds remaining
-                    if (remainingTime.toMinutes() == 0) {
-                        switch (Math.toIntExact(remainingTime.toSeconds())) {
-                            case 30, 20, 10, 5, 4, 3, 2 {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                    }
+                    case 1 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
                                 return;
                             }
-                            case 1 -> {
-                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler.tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-minute")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("minutes", String.valueOf(Math.toIntExact(remainingTime.toMinutes()))).build());
                                 return;
                             }
                         }
@@ -203,8 +173,36 @@ public class CommandStop {
                 }
             }
 
+            // Announce seconds remaining
+            if (remainingTime.toMinutes() == 0) {
+                switch (Math.toIntExact(remainingTime.toSeconds())) {
+                    case 30, 10, 5, 4, 3, 2 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-seconds")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                        }
 
-
+                    }
+                    case 1 -> {
+                        switch (actionType) {
+                            case STOP -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Stop-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                            case RESTART -> {
+                                Bukkit.broadcast(ColorParser.of(MiscCfg.get().getString("Scheduler.Messages.Restart-second")).parseMinimessagePlaceholder("scheduler", MiscCfg.get().getString("Scheduler.Scheduler-tag")).parseMinimessagePlaceholder("seconds", String.valueOf(Math.toIntExact(remainingTime.toSeconds()))).build());
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
         }, 0L, 20L);
     }
 }
