@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class PlayerData {
-    private final transient LinkedHashMap<UUID, TPARequest> teleportRequestQueue = new LinkedHashMap<>(); // Store requests by target UUID
-    private final transient LinkedList<UUID> outgoingTPARequests = new LinkedList<>(); // Store UUID of targets
+    private static final LinkedHashMap<UUID, TPARequest> teleportRequestQueue = new LinkedHashMap<>(); // Store requests by target UUID
+    private static final LinkedList<UUID> outgoingTPARequests = new LinkedList<>(); // Store UUID of targets
     private TeleportMode teleportMode = TeleportMode.DEFAULT;
     private boolean busy = false;
 
