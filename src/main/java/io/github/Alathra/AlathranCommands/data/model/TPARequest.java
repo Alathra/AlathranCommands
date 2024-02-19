@@ -108,6 +108,9 @@ public class TPARequest {
     public boolean canAfford() {
         if (AlathranCommands.getVaultHook().isVaultLoaded()) {
             Economy economy = AlathranCommands.getVaultHook().getVault();
+            if (price == 0)
+                return true;
+
             switch (this.getType()) {
                 case TPA -> {
                     return economy.getBalance(Bukkit.getOfflinePlayer(this.getOrigin().getUniqueId())) > price;
