@@ -95,11 +95,17 @@ public class TeleportGraceTask implements Runnable {
                     return;
                 }
 
-                if (request.canAfford()) {
+                if (!request.canAfford()) {
                     double price = TPCfg.get().getInt("Settings.TPA.Price");
                     switch (request.getType()) {
-                        case TPA -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-notenoughfunds")).parseMinimessagePlaceholder("price", String.valueOf(Math.round(price))).build());
-                        case TPAHERE -> request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-tpahere-notenoughfunds")).build());
+                        case TPA -> {
+                            request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-notenoughfunds")).parseMinimessagePlaceholder("price", String.valueOf(Math.round(price))).build());
+                            request.getTarget().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-otherperson-notenoughfunds")).build());
+                        }
+                        case TPAHERE -> {
+                            request.getOrigin().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-otherperson-notenoughfunds")).build());
+                            request.getTarget().sendMessage(ColorParser.of(TPCfg.get().getString("Messages.error-notenoughfunds")).parseMinimessagePlaceholder("price", String.valueOf(Math.round(price))).build());
+                        }
                     }
                     return;
                 }

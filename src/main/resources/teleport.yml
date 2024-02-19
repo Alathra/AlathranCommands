@@ -53,7 +53,7 @@ Messages:
   wild-findinglocation: '<purple>Finding a suitable location. Please stand still...'
 
   error-notenoughfunds: '<red>Teleporting costs $<price>'
-  error-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
+  error-otherperson-notenoughfunds: '<red>That person cannot afford to teleport!'
 
   error-clear-playerhasnotplayed: '<red><player> has not played on the server before.'
 
