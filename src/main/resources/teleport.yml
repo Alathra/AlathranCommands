@@ -46,14 +46,14 @@ Messages:
   error-origin-cancel-title: '<red>Canceled TP'
   error-origin-cancel-subtitle: ''
   error-cooldown: '<red>You still have <cooldown> remaining on your cooldown.'
-  error-target-cooldown: '<red>That player cannot teleport yet!'
+  error-tpahere-cooldown: '<red>That player cannot teleport yet!'
 
   error-wild-wrongworld: '<red>You can''t use that command here!'
   error-world-config: '<red>The world settings have not been configured correctly.'
   wild-findinglocation: '<purple>Finding a suitable location. Please stand still...'
 
   error-notenoughfunds: '<red>Teleporting costs $<price>'
-  error-otherperson-notenoughfunds: '<red>That person cannot afford to teleport!'
+  error-origin-tpahere-notenoughfunds: '<red>That person cannot afford to teleport!'
 
   error-clear-playerhasnotplayed: '<red><player> has not played on the server before.'
 
@@ -63,7 +63,7 @@ Messages:
   teleporting-origin-title: '<green>Teleported'
   teleporting-origin-subtitle: ''
   teleporting-origin: '<green>Teleporting...'
-  teleporting-target: '<origin> Teleported to you.'
+  teleporting-target: '<origin> teleported to you.'
   teleporting-tpo-target: '<yellow>Teleporting...'
 
   error-wildtp-nosuitablelocation: '<red>No suitable location found.'
