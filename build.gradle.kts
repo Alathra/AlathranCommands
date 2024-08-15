@@ -77,7 +77,7 @@ dependencies {
         exclude("net.kyori")
     }
 
-    implementation("dev.jorel:commandapi-bukkit-shade:9.2.0")
+    implementation("dev.jorel:commandapi-bukkit-shade:9.5.3")
 
     compileOnly("com.github.MilkBowl:VaultAPI:1.7")
 
